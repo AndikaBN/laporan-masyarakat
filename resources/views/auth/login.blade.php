@@ -147,7 +147,7 @@
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>Admin Login</h1>
+            <h1>Login Admin</h1>
             <p>Laporan Rakyat Jelata</p>
         </div>
 
@@ -169,7 +169,7 @@
             @csrf
 
             <div class="form-group">
-                <label for="email">Email Address</label>
+                <label for="email">Alamat Email</label>
                 <input
                     type="email"
                     id="email"
@@ -178,7 +178,7 @@
                     required
                     autofocus
                     class="{{ $errors->has('email') ? 'error-input' : '' }}"
-                    placeholder="your@email.com"
+                    placeholder="email@anda.com"
                 />
                 @if ($errors->has('email'))
                     <div class="input-error">{{ $errors->first('email') }}</div>
@@ -186,7 +186,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Kata Sandi</label>
                 <input
                     type="password"
                     id="password"
@@ -207,10 +207,10 @@
                     name="remember"
                     {{ old('remember') ? 'checked' : '' }}
                 />
-                <label for="remember">Remember me</label>
+                <label for="remember">Ingat saya</label>
             </div>
 
-            <button type="submit" class="btn-login">Sign In</button>
+            <button type="submit" class="btn-login">Masuk</button>
         </form>
     </div>
 </body>

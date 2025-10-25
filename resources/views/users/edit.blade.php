@@ -5,16 +5,15 @@
     :gradientEnd="'#764ba2'"
 >
     @slot('sidebarContent')
-        <li class="sidebar-title">Main</li>
-        <li><a href="{{ route('super.dashboard') }}" class="sidebar-link">📊 Dashboard</a></li>
+        <li class="sidebar-title">Utama</li>
+        <li><a href="{{ route('super.dashboard') }}" class="sidebar-link">📊 Dasbor</a></li>
 
-        <li class="sidebar-title">User Management</li>
-        <li><a href="{{ route('users.index') }}" class="sidebar-link">👥 All Users</a></li>
-        <li><a href="{{ route('users.create') }}" class="sidebar-link">➕ Create User</a></li>
-
-        <li class="sidebar-title">Settings</li>
-        <li><a href="#" class="sidebar-link">⚙️ System Settings</a></li>
-        <li><a href="#" class="sidebar-link">📋 Reports</a></li>
+        <li class="sidebar-title">Manajemen Pengguna</li>
+        <li><a href="{{ route('users.index') }}" class="sidebar-link">👥 Semua Pengguna</a></li>
+ 
+        <li class="sidebar-title">Pengaturan</li>
+        <li><a href="#" class="sidebar-link">⚙️ Pengaturan Sistem</a></li>
+        <li><a href="#" class="sidebar-link">📋 Laporan</a></li>
     @endslot
 
     <style>
@@ -146,8 +145,8 @@
     </style>
 
     <div class="form-container">
-        <h1 class="page-title">Edit User: {{ $user->name }}</h1>
-        <p class="page-subtitle">Update user information</p>
+        <h1 class="page-title">Edit Pengguna: {{ $user->name }}</h1>
+        <p class="page-subtitle">Perbarui informasi pengguna</p>
 
         <div class="form-card">
             <form method="POST" action="{{ route('users.update', $user) }}">
@@ -156,14 +155,14 @@
 
                 <!-- Name Field -->
                 <div class="form-group">
-                    <label for="name">Full Name</label>
+                    <label for="name">Nama Lengkap</label>
                     <input
                         type="text"
                         id="name"
                         name="name"
                         value="{{ old('name', $user->name) }}"
                         required
-                        placeholder="Enter full name"
+                        placeholder="Masukkan nama lengkap"
                         class="{{ $errors->has('name') ? 'error' : '' }}"
                     />
                     @if ($errors->has('name'))
@@ -173,14 +172,14 @@
 
                 <!-- Email Field -->
                 <div class="form-group">
-                    <label for="email">Email Address</label>
+                    <label for="email">Alamat Email</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
                         value="{{ old('email', $user->email) }}"
                         required
-                        placeholder="user@example.com"
+                        placeholder="pengguna@example.com"
                         class="{{ $errors->has('email') ? 'error' : '' }}"
                     />
                     @if ($errors->has('email'))
@@ -197,8 +196,8 @@
                         required
                         class="{{ $errors->has('role') ? 'error' : '' }}"
                     >
-                        <option value="agency_admin" {{ old('role', $user->role) === 'agency_admin' ? 'selected' : '' }}>Agency Admin</option>
-                        <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>Regular User</option>
+                        <option value="agency_admin" {{ old('role', $user->role) === 'agency_admin' ? 'selected' : '' }}>Admin Agensi</option>
+                        <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>Pengguna Biasa</option>
                     </select>
                     @if ($errors->has('role'))
                         <div class="input-error">{{ $errors->first('role') }}</div>
@@ -207,15 +206,15 @@
 
                 <!-- Password Field (Optional) -->
                 <div class="form-group">
-                    <label for="password">Password (Leave blank to keep current)</label>
+                    <label for="password">Kata Sandi (Kosongkan untuk tetap gunakan yang lama)</label>
                     <input
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="New password (optional)"
+                        placeholder="Kata sandi baru (opsional)"
                         class="{{ $errors->has('password') ? 'error' : '' }}"
                     />
-                    <div class="helper-text">Minimum 8 characters</div>
+                    <div class="helper-text">Minimal 8 karakter</div>
                     @if ($errors->has('password'))
                         <div class="input-error">{{ $errors->first('password') }}</div>
                     @endif
@@ -223,19 +222,19 @@
 
                 <!-- Confirm Password Field (Optional) -->
                 <div class="form-group">
-                    <label for="password_confirmation">Confirm Password</label>
+                    <label for="password_confirmation">Konfirmasi Kata Sandi</label>
                     <input
                         type="password"
                         id="password_confirmation"
                         name="password_confirmation"
-                        placeholder="Confirm new password (optional)"
+                        placeholder="Konfirmasi kata sandi baru (opsional)"
                     />
                 </div>
 
                 <!-- Buttons -->
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Update User</button>
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Perbarui Pengguna</button>
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>

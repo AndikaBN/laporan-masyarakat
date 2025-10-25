@@ -5,16 +5,15 @@
     :gradientEnd="'#764ba2'"
 >
     @slot('sidebarContent')
-        <li class="sidebar-title">Main</li>
-        <li><a href="{{ route('super.dashboard') }}" class="sidebar-link">📊 Dashboard</a></li>
+        <li class="sidebar-title">Utama</li>
+        <li><a href="{{ route('super.dashboard') }}" class="sidebar-link">📊 Dasbor</a></li>
 
-        <li class="sidebar-title">User Management</li>
-        <li><a href="{{ route('users.index') }}" class="sidebar-link active">👥 All Users</a></li>
-        <li><a href="{{ route('users.create') }}" class="sidebar-link">➕ Create User</a></li>
-
-        <li class="sidebar-title">Settings</li>
-        <li><a href="#" class="sidebar-link">⚙️ System Settings</a></li>
-        <li><a href="#" class="sidebar-link">📋 Reports</a></li>
+        <li class="sidebar-title">Manajemen Pengguna</li>
+        <li><a href="{{ route('users.index') }}" class="sidebar-link active">👥 Semua Pengguna</a></li>
+        
+        <li class="sidebar-title">Pengaturan</li>
+        <li><a href="#" class="sidebar-link">⚙️ Pengaturan Sistem</a></li>
+        <li><a href="#" class="sidebar-link">📋 Laporan</a></li>
     @endslot
 
     <style>
@@ -335,11 +334,11 @@
 
     <div class="page-header">
         <div>
-            <h1 class="page-title">User Management</h1>
-            <p class="page-subtitle">Manage all system users</p>
+            <h1 class="page-title">Manajemen Pengguna</h1>
+            <p class="page-subtitle">Kelola semua pengguna sistem</p>
         </div>
         <a href="{{ route('users.create') }}" class="btn-primary">
-            ➕ Create New User
+            ➕ Buat Pengguna Baru
         </a>
     </div>
 
@@ -350,24 +349,24 @@
                 <input 
                     type="text" 
                     name="search" 
-                    placeholder="Search by name..." 
+                    placeholder="Cari berdasarkan nama..." 
                     value="{{ $searchQuery }}"
                     class="search-input"
                 />
-                <button type="submit" class="search-btn">🔍 Search</button>
+                <button type="submit" class="search-btn">🔍 Cari</button>
             </div>
 
             <div class="filter-group">
                 <select name="role" class="filter-select" onchange="this.form.submit()">
-                    <option value="all" {{ $selectedRole === 'all' ? 'selected' : '' }}>All Roles</option>
+                    <option value="all" {{ $selectedRole === 'all' ? 'selected' : '' }}>Semua Role</option>
                     <option value="super_admin" {{ $selectedRole === 'super_admin' ? 'selected' : '' }}>Super Admin</option>
-                    <option value="agency_admin" {{ $selectedRole === 'agency_admin' ? 'selected' : '' }}>Agency Admin</option>
-                    <option value="user" {{ $selectedRole === 'user' ? 'selected' : '' }}>Regular User</option>
+                    <option value="agency_admin" {{ $selectedRole === 'agency_admin' ? 'selected' : '' }}>Admin Agensi</option>
+                    <option value="user" {{ $selectedRole === 'user' ? 'selected' : '' }}>Pengguna Biasa</option>
                 </select>
             </div>
 
             @if ($searchQuery || $selectedRole !== 'all')
-                <a href="{{ route('users.index') }}" class="reset-btn">✕ Clear Filters</a>
+                <a href="{{ route('users.index') }}" class="reset-btn">✕ Bersihkan Filter</a>
             @endif
         </form>
     </div>
@@ -377,11 +376,11 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Nama</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Created</th>
-                    <th style="text-align: center;">Actions</th>
+                    <th>Dibuat</th>
+                    <th style="text-align: center;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -398,10 +397,10 @@
                         <td style="text-align: center;">
                             <div class="actions" style="justify-content: center;">
                                 <a href="{{ route('users.edit', $user) }}" class="btn-link">Edit</a>
-                                <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure?');">
+                                <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-danger">Delete</button>
+                                    <button type="submit" class="btn-danger">Hapus</button>
                                 </form>
                             </div>
                         </td>
@@ -409,7 +408,7 @@
                 @empty
                     <tr>
                         <td colspan="5" class="empty-state">
-                            No users found. <a href="{{ route('users.create') }}" class="btn-link">Create one now</a>
+                            Tidak ada pengguna. <a href="{{ route('users.create') }}" class="btn-link">Buat sekarang</a>
                         </td>
                     </tr>
                 @endforelse
