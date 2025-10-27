@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'agency@admin.com',
             'password' => Hash::make('password123'),
             'role' => 'agency_admin',
+            'agency_id' => 1,
         ]);
 
         // Create Regular User (for testing blocked login)
@@ -41,6 +42,12 @@ class DatabaseSeeder extends Seeder
         // Create additional test users
         User::factory(5)->create([
             'role' => 'user',
+        ]);
+
+        // Seed categories & reports
+        $this->call([
+            CategorySeeder::class,
+            ReportSeeder::class,
         ]);
     }
 }

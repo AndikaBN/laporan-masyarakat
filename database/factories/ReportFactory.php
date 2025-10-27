@@ -19,6 +19,8 @@ class ReportFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'location' => $this->faker->address(),
+            'latitude' => $this->faker->latitude(-90, 90),
+            'longitude' => $this->faker->longitude(-180, 180),
             'status' => $this->faker->randomElement(['submitted', 'under_review', 'approved', 'rejected', 'completed']),
         ];
     }

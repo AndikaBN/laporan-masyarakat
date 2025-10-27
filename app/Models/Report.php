@@ -18,11 +18,15 @@ class Report extends Model
         'title',
         'description',
         'location',
+        'latitude',
+        'longitude',
         'status',
     ];
 
     protected $casts = [
         'status' => 'string',
+        'latitude' => 'float',
+        'longitude' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

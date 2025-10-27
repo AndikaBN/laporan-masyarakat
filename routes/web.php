@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\WebAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +56,11 @@ Route::middleware(['auth', 'ensure.admin'])->prefix('/agency')->name('agency.')-
     Route::get('/dashboard', function () {
         return view('agency.dashboard');
     })->name('dashboard');
+    
+    // Agency Reports Routes
+    Route::get('/reports', [ReportController::class, 'agencyIndex'])->name('reports.index');
+    Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
+    Route::put('/reports/{report}/status', [ReportController::class, 'updateStatus'])->name('reports.updateStatus');
 });
 
 // User Management Routes (Super Admin Only)

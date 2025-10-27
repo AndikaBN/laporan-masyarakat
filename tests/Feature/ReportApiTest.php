@@ -52,6 +52,8 @@ class ReportApiTest extends TestCase
                 'description' => 'Ada lubang besar di jalan utama',
                 'category_id' => $this->category->id,
                 'location' => 'Jl. Merdeka No. 10',
+                'latitude' => -6.2088,
+                'longitude' => 106.8456,
                 'images' => $images,
                 'video' => $video,
             ]);
@@ -98,6 +100,9 @@ class ReportApiTest extends TestCase
                 'title' => 'Laporan Test',
                 'description' => 'Deskripsi laporan',
                 'category_id' => $this->category->id,
+                'location' => 'Jakarta',
+                'latitude' => -6.2088,
+                'longitude' => 106.8456,
                 'images' => $images,
             ]);
 
@@ -113,11 +118,11 @@ class ReportApiTest extends TestCase
         $response = $this->actingAs($this->regularUser, 'sanctum')
             ->postJson('/api/reports', [
                 'title' => 'Test',
-                // Missing description and category_id
+                // Missing description, category_id, latitude, longitude
             ]);
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['description', 'category_id']);
+        $response->assertJsonValidationErrors(['description', 'category_id', 'latitude', 'longitude']);
     }
 
     /**

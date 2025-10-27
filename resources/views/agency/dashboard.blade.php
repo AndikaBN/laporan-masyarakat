@@ -10,7 +10,7 @@
 
         <li class="sidebar-title">Agensi</li>
         <li><a href="#" class="sidebar-link">📍 Profil Agensi</a></li>
-        <li><a href="#" class="sidebar-link">📋 Laporan Agensi</a></li>
+        <li><a href="{{ route('agency.reports.index') }}" class="sidebar-link {{ request()->routeIs('agency.reports.*') ? 'active' : '' }}">📋 Laporan Agensi</a></li>
 
         <li class="sidebar-title">Pengaturan</li>
         <li><a href="#" class="sidebar-link">⚙️ Pengaturan Akun</a></li>

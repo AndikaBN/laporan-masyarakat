@@ -18,12 +18,17 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('location')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->enum('status', ['submitted', 'under_review', 'approved', 'rejected', 'completed'])->default('submitted');
             $table->timestamps();
 
             $table->index('user_id');
             $table->index('category_id');
             $table->index('status');
+            // Regular indexes untuk latitude dan longitude (untuk optimasi query)
+            $table->index('latitude');
+            $table->index('longitude');
         });
     }
 

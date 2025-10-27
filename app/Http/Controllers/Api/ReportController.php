@@ -76,6 +76,8 @@ class ReportController extends Controller
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'location' => 'nullable|string|max:255',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
             'images' => 'nullable|array|max:5',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:4096', // max 4MB per image
             'video' => 'nullable|file|mimetypes:video/mp4,video/quicktime,video/x-matroska|max:40960', // max 40MB
@@ -97,6 +99,8 @@ class ReportController extends Controller
                 'description' => $request->description,
                 'category_id' => $request->category_id,
                 'location' => $request->location,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
                 'status' => 'submitted',
             ]);
 
