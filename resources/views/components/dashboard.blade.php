@@ -203,7 +203,7 @@
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <h1>Laporan Rakyat Jelata - {{ $pageRole ?? 'Admin' }}</h1>
+        <h1>Laporan Rakyat Jelata - {{ auth()->user()->name }}</h1>
         <div class="navbar-right">
             <div class="user-info">
                 <span>{{ auth()->user()->name }}</span>
