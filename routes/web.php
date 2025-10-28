@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\WebAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AgencyController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +51,12 @@ Route::middleware(['auth', 'ensure.admin'])->prefix('/super')->name('super.')->g
     Route::get('/dashboard', function () {
         return view('super.dashboard');
     })->name('dashboard');
+    
+    // Agencies Routes
+    Route::resource('agencies', AgencyController::class);
+    
+    // Categories Routes
+    Route::resource('categories', CategoryController::class);
 });
 
 // Agency Admin Routes

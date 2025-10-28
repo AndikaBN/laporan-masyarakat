@@ -12,134 +12,144 @@
         <li><a href="{{ route('agency.reports.index') }}" class="sidebar-link {{ request()->routeIs('agency.reports.*') ? 'active' : '' }}">📋 Laporan Agensi</a></li>
     @endslot
 
-<div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <a href="{{ route('agency.reports.index') }}" class="btn btn-secondary mb-3">
-                <i class="fas fa-arrow-left"></i> Kembali
-            </a>
+<div class="container-fluid" style="padding: 30px;">
+    <!-- Header Section -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(245, 87, 108, 0.15);">
+        <div>
+            <h1 style="margin: 0; color: white; font-size: 32px; font-weight: 700;">📋 {{ $report->title }}</h1>
+            <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0; font-size: 14px;">Laporan dari <strong>{{ $report->user->name }}</strong></p>
+        </div>
+        <a href="{{ route('agency.reports.index') }}" style="background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border: 2px solid rgba(255,255,255,0.3); transition: all 0.3s; cursor: pointer;">
+            ← Kembali
+        </a>
+    </div>
+
+    <!-- Status Badge -->
+    <div style="margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+        @php
+            $statusConfig = [
+                'submitted' => ['bg' => '#cce5ff', 'text' => '#0047ab', 'icon' => '📝', 'label' => 'Baru Masuk'],
+                'under_review' => ['bg' => '#fff3cd', 'text' => '#856404', 'icon' => '🔍', 'label' => 'Sedang Ditinjau'],
+                'approved' => ['bg' => '#d4edda', 'text' => '#155724', 'icon' => '✅', 'label' => 'Disetujui'],
+                'rejected' => ['bg' => '#f8d7da', 'text' => '#721c24', 'icon' => '❌', 'label' => 'Ditolak'],
+                'completed' => ['bg' => '#d1ecf1', 'text' => '#0c5460', 'icon' => '🎉', 'label' => 'Selesai'],
+            ];
+            $status = $statusConfig[$report->status] ?? ['bg' => '#f0f0f0', 'text' => '#333', 'icon' => '📌', 'label' => ucfirst(str_replace('_', ' ', $report->status))];
+        @endphp
+        <span style="background: {{ $status['bg'] }}; color: {{ $status['text'] }}; padding: 12px 20px; border-radius: 20px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            {{ $status['icon'] }} {{ $status['label'] }}
+        </span>
+        <div style="color: #999; font-size: 13px;">
+            Diperbarui: <strong>{{ $report->updated_at->format('d M Y H:i') }}</strong>
         </div>
     </div>
 
-    <div class="row">
-        <!-- Left Column: Report Details -->
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">{{ $report->title }}</h4>
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 25px;">
+        <!-- Main Content -->
+        <div>
+            <!-- Info Cards Row -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1); color: white;">
+                    <div style="color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px;">👤 Pelapor</div>
+                    <div style="color: white; font-weight: 700; margin-bottom: 3px; font-size: 15px;">{{ $report->user->name }}</div>
+                    <div style="color: rgba(255,255,255,0.9); font-size: 12px;">{{ $report->user->email }}</div>
                 </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="fw-bold">Pelapor</label>
-                        <p>{{ $report->user->name }} ({{ $report->user->email }})</p>
-                    </div>
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(245, 87, 108, 0.1); color: white;">
+                    <div style="color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px;">📂 Kategori</div>
+                    <div style="color: white; font-weight: 700; font-size: 15px;">{{ $report->category->name }}</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(79, 172, 254, 0.1); color: white;">
+                    <div style="color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px;">📍 Lokasi</div>
+                    <div style="color: white; font-weight: 700; font-size: 15px;">{{ $report->location ?? 'Tidak ada' }}</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(250, 112, 154, 0.1); color: white;">
+                    <div style="color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px;">🗓️ Tanggal</div>
+                    <div style="color: white; font-weight: 700; font-size: 15px;">{{ $report->created_at->format('d M Y') }}</div>
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        <label class="fw-bold">Kategori</label>
-                        <p>{{ $report->category->name }}</p>
-                    </div>
+            <!-- Description Card -->
+            <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 25px; border-top: 4px solid #f093fb;">
+                <h3 style="margin: 0 0 15px 0; color: #333; font-weight: 700; font-size: 18px;">📝 Deskripsi Laporan</h3>
+                <p style="color: #555; line-height: 1.8; margin: 0; font-size: 15px;">{{ $report->description }}</p>
+            </div>
 
-                    <div class="form-group">
-                        <label class="fw-bold">Lokasi</label>
-                        <p>{{ $report->location ?? 'Tidak ada' }}</p>
+            <!-- Koordinat Card -->
+            <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 25px; border-top: 4px solid #4facfe;">
+                <h3 style="margin: 0 0 15px 0; color: #333; font-weight: 700; font-size: 18px;">🧭 Koordinat GPS</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <div style="color: #999; font-size: 12px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase;">Latitude</div>
+                        <div style="color: #333; font-weight: 600; font-family: 'Courier New', monospace; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 12px; border-radius: 8px; font-size: 14px;">{{ $report->latitude }}</div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="fw-bold">Koordinat</label>
-                        <p>Latitude: {{ $report->latitude }}, Longitude: {{ $report->longitude }}</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="fw-bold">Status</label>
-                        <p>
-                            <span class="badge bg-{{ $report->status === 'submitted' ? 'primary' : ($report->status === 'under_review' ? 'warning' : ($report->status === 'approved' ? 'success' : 'danger')) }} fs-6">
-                                {{ ucfirst(str_replace('_', ' ', $report->status)) }}
-                            </span>
-                        </p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="fw-bold">Deskripsi</label>
-                        <p>{{ $report->description }}</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="fw-bold">Tanggal Laporan</label>
-                        <p>{{ $report->created_at->format('d M Y H:i') }}</p>
+                    <div>
+                        <div style="color: #999; font-size: 12px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase;">Longitude</div>
+                        <div style="color: #333; font-weight: 600; font-family: 'Courier New', monospace; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 12px; border-radius: 8px; font-size: 14px;">{{ $report->longitude }}</div>
                     </div>
                 </div>
             </div>
 
             <!-- Media Gallery -->
             @if($report->media->count() > 0)
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Media Laporan</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            @foreach($report->media as $media)
-                                @if($media->type === 'image')
-                                    <div class="col-md-6 mb-3">
-                                        <img src="{{ asset('storage/' . $media->file_path) }}" class="img-fluid rounded" alt="Report image">
-                                    </div>
-                                @elseif($media->type === 'video')
-                                    <div class="col-md-12 mb-3">
-                                        <video width="100%" height="auto" controls class="rounded">
-                                            <source src="{{ asset('storage/' . $media->file_path) }}" type="{{ $media->mime_type }}">
-                                            Browser Anda tidak mendukung video tag.
-                                        </video>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
+                <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border-top: 4px solid #fa709a;">
+                    <h3 style="margin: 0 0 20px 0; color: #333; font-weight: 700; font-size: 18px;">📸 Media Laporan ({{ $report->media->count() }} file)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
+                        @foreach($report->media as $media)
+                            @if($media->type === 'image')
+                                <div style="position: relative; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: transform 0.3s;">
+                                    <img src="{{ asset('storage/' . $media->file_path) }}" style="width: 100%; height: 180px; object-fit: cover; cursor: pointer; transition: transform 0.3s;" alt="Report image" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                                </div>
+                            @elseif($media->type === 'video')
+                                <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.12); background: #000;">
+                                    <video style="width: 100%; height: 180px; object-fit: cover;" controls>
+                                        <source src="{{ asset('storage/' . $media->file_path) }}" type="{{ $media->mime_type }}">
+                                        Browser Anda tidak mendukung video tag.
+                                    </video>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             @endif
         </div>
 
-        <!-- Right Column: Map -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Lokasi Laporan (Peta)</h5>
+        <!-- Right Sidebar -->
+        <div>
+            <!-- Map Card -->
+            <div style="background: white; padding: 0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 25px; border-top: 4px solid #4facfe;">
+                <div style="padding: 20px; border-bottom: 1px solid #f0f0f0; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h3 style="margin: 0; color: white; font-weight: 700; font-size: 18px;">🗺️ Lokasi pada Peta</h3>
                 </div>
-                <div class="card-body p-0">
-                    <div id="map" style="width: 100%; height: 400px; border-radius: 0 0 0.25rem 0.25rem;"></div>
-                </div>
+                <div id="map" style="width: 100%; height: 350px;"></div>
             </div>
 
-            <!-- Update Status Form -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Perbarui Status</h5>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('agency.reports.updateStatus', $report->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
+            <!-- Update Status Card -->
+            <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #f5576c;">
+                <h3 style="margin: 0 0 20px 0; color: #333; font-weight: 700; font-size: 18px;">⚙️ Perbarui Status</h3>
+                <form action="{{ route('agency.reports.updateStatus', $report->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
 
-                        <div class="form-group mb-3">
-                            <label for="status" class="form-label fw-bold">Status Baru</label>
-                            <select name="status" id="status" class="form-select" required>
-                                <option value="submitted" {{ $report->status === 'submitted' ? 'selected' : '' }}>Submitted</option>
-                                <option value="under_review" {{ $report->status === 'under_review' ? 'selected' : '' }}>Under Review</option>
-                                <option value="approved" {{ $report->status === 'approved' ? 'selected' : '' }}>Approved</option>
-                                <option value="rejected" {{ $report->status === 'rejected' ? 'selected' : '' }}>Rejected</option>
-                                <option value="completed" {{ $report->status === 'completed' ? 'selected' : '' }}>Completed</option>
-                            </select>
-                        </div>
+                    <div style="margin-bottom: 18px;">
+                        <label for="status" style="display: block; color: #333; font-weight: 700; margin-bottom: 10px; font-size: 14px;">Status Baru</label>
+                        <select name="status" id="status" required style="width: 100%; padding: 12px 14px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: border-color 0.3s, box-shadow 0.3s; font-weight: 600;">
+                            <option value="submitted" {{ $report->status === 'submitted' ? 'selected' : '' }}>📝 Baru Masuk</option>
+                            <option value="under_review" {{ $report->status === 'under_review' ? 'selected' : '' }}>🔍 Sedang Ditinjau</option>
+                            <option value="approved" {{ $report->status === 'approved' ? 'selected' : '' }}>✅ Disetujui</option>
+                            <option value="rejected" {{ $report->status === 'rejected' ? 'selected' : '' }}>❌ Ditolak</option>
+                            <option value="completed" {{ $report->status === 'completed' ? 'selected' : '' }}>🎉 Selesai</option>
+                        </select>
+                    </div>
 
-                        <div class="form-group mb-3">
-                            <label for="note" class="form-label fw-bold">Catatan (Opsional)</label>
-                            <textarea name="note" id="note" class="form-control" rows="3" placeholder="Tambahkan catatan..."></textarea>
-                        </div>
+                    <div style="margin-bottom: 20px;">
+                        <label for="note" style="display: block; color: #333; font-weight: 700; margin-bottom: 10px; font-size: 14px;">Catatan (Opsional)</label>
+                        <textarea name="note" id="note" rows="3" placeholder="Tambahkan catatan atau komentar..." style="width: 100%; padding: 12px 14px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; resize: vertical; font-family: inherit; transition: border-color 0.3s, box-shadow 0.3s;"></textarea>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="fas fa-save"></i> Perbarui Status
-                        </button>
-                    </form>
-                </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 14px 20px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);">
+                        💾 Perbarui Status
+                    </button>
+                </form>
             </div>
         </div>
     </div>
